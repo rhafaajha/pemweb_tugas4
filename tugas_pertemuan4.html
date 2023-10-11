@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="32x32" href="https://icons.iconarchive.com/icons/paomedia/small-n-flat/256/calculator-icon.png">
+    <title>
+      Tugas Pertemuan 4 | Membuat Website Sederhana menggunakan JavaScript
+    </title>
+    <style>
+      html {
+        font-family: poppins;
+      }
+
+      body{
+        background-image: url(https://i.pinimg.com/originals/12/7f/70/127f704f25a0b93efa8dc2a81dc19e38.jpg);
+        background-position: center;
+        background-size: 15%;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        height: 100vh;
+        margin: 0;
+      }
+
+      footer{
+        position: fixed;
+        width: 100%;
+        background-color: white;
+        padding: 0.0029% 1%;
+        text-align: center;
+        bottom: 0;
+        margin-left: 0;
+      }
+
+      .container h2 {
+          font-size: 150%;
+          margin-bottom: 5%;
+          margin-top: -7%;
+      }
+
+      .text {
+          display: inline-flex;
+          font-weight: bold;
+          font-size: 120%;
+      }
+
+      #keterangan {
+        font-size: 300%;
+        color: grey;
+        font-weight: bolder;
+      }
+
+      .container {
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.35);
+        width: 30%;
+        height: 43%;
+        padding: 5% 2%;
+        text-align: center;
+      }
+
+      input {
+          width: 210%;
+          padding: 15%;
+          border: 1px solid grey;
+          border-radius: 5px;
+          font-size: 14px;
+          transition: border-color 1s;
+      }
+
+      input:focus {
+        border-color:#007bff;
+      }
+
+      p {
+        font-size: 14px;
+      }
+
+      td {
+        align-items: center;
+        padding: 1%;
+      }
+
+      table {
+        align-items: center;
+        margin-left: -8%;
+      }
+
+      button {
+          background-color: #007bff;
+          border: none;
+          border-radius: 5px;
+          color: #fff;
+          cursor: pointer;
+          font-size: 90%;
+          padding: 2.5% 5%;
+          width: 35%;
+          text-align: center;
+          margin-bottom: 3%;
+          margin-top: 5%;
+      }
+
+      button:hover {
+        background-color: navy;
+      }
+
+      button:disabled {
+        background-color: #ccc;
+      }
+
+      /* For mobile phones: */
+      [class*="col-"] {
+        width: 100%;
+      }
+
+      @media only screen and (min-width: 600px) {
+        /* For tablets: */
+        .col-s-1 {width: 8.33%;}
+        .col-s-2 {width: 16.66%;}
+        .col-s-3 {width: 25%;}
+        .col-s-4 {width: 33.33%;}
+        .col-s-5 {width: 41.66%;}
+        .col-s-6 {width: 50%;}
+        .col-s-7 {width: 58.33%;}
+        .col-s-8 {width: 66.66%;}
+        .col-s-9 {width: 75%;}
+        .col-s-10 {width: 83.33%;}
+        .col-s-11 {width: 91.66%;}
+        .col-s-12 {width: 100%;}
+      }
+      @media only screen and (min-width: 768px) {
+        /* For desktop: */
+        .col-1 {width: 8.33%;}
+        .col-2 {width: 16.66%;}
+        .col-3 { width: 25%;}
+        .col-4 { width: 33.33%; }
+        .col-5 {width: 41.66%; }
+        .col-6 { width: 50%;}
+        .col-7 { width: 58.33%;}
+        .col-8 { width: 66.66%; }
+        .col-9 { width: 75%; }
+        .col-10 {  width: 83.33%; }
+        .col-11 { width: 91.66%; }
+        .col-12 {  width: 100%; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Kalkulator BMI Dewasa</h2>
+      <form class="input-container" name="calform">
+        <table width="70%">
+          <tr>
+            <td><p>Tinggi Badan</h3></p>
+            <td><input type="number" name="tb" id="data1" min="100" max="250" placeholder="masukkan tinggi badan (cm)"></td>
+          </tr>
+          <tr>
+            <td><p>Berat Badan</p></td>
+            <td><input type="number" name="bb" id="data2" placeholder="masukkan berat badan (kg)" min="20" max="200"></td>
+          </tr>
+        </table>     
+      </form>
+      <button type="submit" id="hitung" value="Hitung" onclick="hitung()">Hitung</button>
+      <button type="reset" id="reset" value="Reset" onclick="clearForm(document.calform)">Reset</button>
+      <br /> 
+      <label class="text">Hasil: </label>
+      <label class="text" id="hasil">0</label>
+      <br>
+      <label id="keterangan"></label>
+    </div>
+    <footer type="lock">
+      <p>Build for Assigment 4 Web Programming | &copy; 20102313</p>
+    </footer>
+    
+
+    <script type="text/JavaScript">
+      function clearForm(formObj) {
+        var allElements = formObj.elements;
+        for (i = 0; i < allElements.length; i++) {
+          if (allElements[i].type == 'text' || allElements[i].type == 'number' || allElements[i].type == 'date' || allElements[i].type == 'textarea')
+              allElements[i].value = '';
+          }
+        var elementHasil = document.getElementById("hasil").value;
+        if (elementHasil != 0) {
+          document.getElementById("hasil").innerHTML = 0;
+          document.getElementById("keterangan").innerHTML = "";
+        }
+      }
+      function hitung(){
+        var tb = document.getElementById("data1").value;
+        var bb = document.getElementById("data2").value;
+        var hasil = bb / ((tb/100)**2);
+        document.getElementById("hasil").innerHTML = hasil.toFixed(2);
+
+        if (hasil > 40) {
+          document.getElementById("keterangan").innerHTML = "Obesitas Kelas 3";
+        }
+        else if (hasil > 35 && hasil <= 40) {
+          document.getElementById("keterangan").innerHTML = "Obesitas Kelas 2";
+        }
+        else if (hasil > 30 && hasil <= 35) {
+          document.getElementById("keterangan").innerHTML = "Obesitas Kelas 1";
+        }
+        else if (hasil > 25 && hasil <= 30) {
+          document.getElementById("keterangan").innerHTML = "Gemuk";
+        }
+        else if (hasil > 18.5 && hasil <= 25) {
+          document.getElementById("keterangan").innerHTML = "Normal";
+        }
+        else if (hasil > 17 && hasil <= 18.5) {
+          document.getElementById("keterangan").innerHTML = "Kurus";
+        }
+        else if (hasil > 16 && hasil <= 17) {
+          document.getElementById("keterangan").innerHTML = "Lumayan Kurus";
+        }
+        else if (hasil <= 16){
+          document.getElementById("keterangan").innerHTML = "Sangat Kurus";
+        }
+        else {
+          document.getElementById("keterangan").innerHTML = "Data Tidak Benar";
+        }
+      }
+    </script>
+  </body>
+</html>
